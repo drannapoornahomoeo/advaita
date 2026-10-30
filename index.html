@@ -732,10 +732,11 @@ Totally happy with the doctor...</blockquote>
   <div class="bk-sm" id="bkSL" style="display:none">3 · Choose a time</div><div class="bk-g" id="bkS"></div>
   <button class="bk-go" id="bkN" disabled onclick="bkNext()">Continue</button></div>
  <div id="bk2" style="display:none"><div class="bk-sm" id="bkSum"></div>
-  <input id="bkNm" placeholder="Patient full name" autocomplete="name">
-  <input id="bkAg" type="number" min="0" max="130" placeholder="Age">
-  <select id="bkSx"><option value="">Sex</option><option>Female</option><option>Male</option><option>Other</option></select>
   <input id="bkPh" type="tel" placeholder="Mobile number (10 digits)" autocomplete="tel">
+  <div id="bkMatch"></div>
+  <div id="bkNew"><input id="bkNm" placeholder="Patient full name" autocomplete="name">
+  <input id="bkAg" type="number" min="0" max="130" placeholder="Age">
+  <select id="bkSx"><option value="">Sex</option><option>Female</option><option>Male</option><option>Other</option></select></div>
   <button class="bk-go" id="bkC" onclick="bkSubmit()">Confirm appointment</button>
   <button class="bk-o" style="margin-top:8px;width:100%;text-align:center" onclick="bkBack()">← Back</button></div>
  <div id="bk3" style="display:none"><h3>✅ Appointment booked</h3><p class="s" id="bkDone"></p>
@@ -776,15 +777,34 @@ window.bkClose=()=>$('bkM').classList.remove('on');
 window.bkNext=()=>{$('bk1').style.display='none';$('bk2').style.display='block';$('bkMsg').textContent='';
   $('bkSum').textContent=kind+' · '+new Date(date+'T00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+' · '+fmt(time)};
 window.bkBack=()=>{$('bk2').style.display='none';$('bk1').style.display='block'};
+let pick=null,lk=0;
+async function lookup(){
+  const ph=$('bkPh').value.replace(/\D/g,'').slice(-10);pick=null;$('bkNew').style.display='block';$('bkMatch').textContent='';
+  if(ph.length!==10)return;const my=++lk;let r;
+  try{r=await rpc('booking_lookup',{p_phone:ph})}catch(e){return}
+  if(my!==lk||!Array.isArray(r)||!r.length)return;
+  $('bkNew').style.display='none';
+  const h=document.createElement('div');h.className='bk-sm';h.textContent='Is this you?';$('bkMatch').appendChild(h);
+  const add=(k,t,sub)=>{const b=document.createElement('button');b.type='button';b.className='bk-o';b.style.cssText='width:100%;margin-bottom:6px';
+    const e=document.createElement('b');e.textContent=t;b.appendChild(e);if(sub){const m=document.createElement('small');m.textContent=sub;b.appendChild(m)}
+    b.onclick=()=>{pick=k||null;$('bkMatch').querySelectorAll('.bk-o').forEach(x=>x.classList.toggle('sel',x===b));$('bkNew').style.display=k?'none':'block'};$('bkMatch').appendChild(b)};
+  r.forEach(x=>add(x.k,x.n,'Yes, book for this patient'));add(0,'Someone else / new patient','');
+}
+$('bkPh').addEventListener('input',lookup);
 window.bkSubmit=async function(){
-  const nm=$('bkNm').value.trim(),ag=parseInt($('bkAg').value),sx=$('bkSx').value,ph=$('bkPh').value.replace(/\D/g,'').slice(-10);
-  if(nm.length<2||!(ag>=0&&ag<=130)||!sx||ph.length!==10){$('bkMsg').textContent='Please fill name, age, sex and a 10-digit mobile number.';return}
+  const ph=$('bkPh').value.replace(/\D/g,'').slice(-10);let nm='my existing patient record',args={p_phone:ph,p_kind:kind,p_date:date,p_time:hhmm(time)};
+  if(ph.length!==10){$('bkMsg').textContent='Please enter a 10-digit mobile number.';return}
+  if($('bkMatch').childNodes.length&&!pick&&$('bkNew').style.display==='none'){$('bkMsg').textContent='Please choose who the appointment is for.';return}
+  if(pick){args.p_pick=pick}
+  else{nm=$('bkNm').value.trim();const ag=parseInt($('bkAg').value),sx=$('bkSx').value;
+    if(nm.length<2||!(ag>=0&&ag<=130)||!sx){$('bkMsg').textContent='Please fill name, age, sex and a 10-digit mobile number.';return}
+    args.p_name=nm;args.p_age=ag;args.p_sex=sx}
   $('bkC').disabled=true;$('bkMsg').textContent='';
-  let r;try{r=await rpc('book_appt',{p_name:nm,p_age:ag,p_sex:sx,p_phone:ph,p_kind:kind,p_date:date,p_time:hhmm(time)})}catch(e){r={ok:false,err:'Network problem. Please try again or call the clinic.'}}
+  let r;try{r=await rpc('book_appt',args)}catch(e){r={ok:false,err:'Network problem. Please try again or call the clinic.'}}
   $('bkC').disabled=false;
   if(r&&r.ok){$('bk2').style.display='none';$('bk3').style.display='block';
     const w=kind+' on '+date+' at '+fmt(time);$('bkDone').textContent=w+'. The clinic will contact you if anything changes.';
-    $('bkWa').href='https://wa.me/916361129208?text='+encodeURIComponent('Hello, I booked '+w+' on the website for '+nm+'.');}
+    $('bkWa').href='https://wa.me/916361129208?text='+encodeURIComponent('Hello, I booked '+w+' on the website'+(pick?'.':' for '+nm+'.'));}
   else{$('bkMsg').textContent=(r&&r.err)||'Could not book. Please call the clinic.';if(r&&r.taken){bkBack();pickDate(date)}}
 };
 rpc('booking_info').then(c=>{if(c&&c.on&&c.days&&c.days.length){cfg=c;document.querySelectorAll('.book-btn').forEach(b=>b.hidden=false)}}).catch(()=>{});
