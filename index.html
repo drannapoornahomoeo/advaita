@@ -14,11 +14,11 @@
 <meta name="geo.placename" content="Kodigehalli, Bengaluru, Karnataka"/>
 <meta name="geo.position" content="13.0709;77.5753"/>
 <meta name="ICBM" content="13.0709, 77.5753"/>
-<link rel="canonical" href="https://drannapoornahomoeo.github.io/advaita/"/>
+<link rel="canonical" href="https://www.advaitahomoeo.in/"/>
 
 <!-- ─── OPEN GRAPH (WhatsApp / Facebook preview) ─── -->
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://drannapoornahomoeo.github.io/advaita/"/>
+<meta property="og:url" content="https://www.advaitahomoeo.in/"/>
 <meta property="og:title" content="Dr. Annapoorna | Homoeopathy Specialist – Advaita Homoeo Clinic, Bengaluru"/>
 <meta property="og:description" content="Expert homoeopathic care for chronic disease, skin conditions, PCOD, asthma, arthritis & children. Located in Kodigehalli, Bengaluru. Call +91 63611 29208."/>
 <meta property="og:image" content="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&auto=format&fit=crop&q=80"/>
@@ -40,11 +40,11 @@
   "@graph": [
     {
       "@type": ["MedicalBusiness", "LocalBusiness"],
-      "@id": "https://drannapoornahomoeo.github.io/advaita/#clinic",
+      "@id": "https://www.advaitahomoeo.in/#clinic",
       "name": "Advaita Homoeo Clinic",
       "alternateName": "Advaita Homeopathy Clinic",
       "description": "Advaita Homoeo Clinic offers classical and clinical homoeopathic treatment for chronic diseases, skin conditions, PCOD, asthma, arthritis, paediatric care and women's health in Kodigehalli, Bengaluru.",
-      "url": "https://drannapoornahomoeo.github.io/advaita/",
+      "url": "https://www.advaitahomoeo.in/",
       "telephone": "+916361129208",
       "priceRange": "₹₹",
       "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&auto=format&fit=crop&q=80",
@@ -102,13 +102,13 @@
     },
     {
       "@type": "Physician",
-      "@id": "https://drannapoornahomoeo.github.io/advaita/#doctor",
+      "@id": "https://www.advaitahomoeo.in/#doctor",
       "name": "Dr. Annapoorna",
       "jobTitle": "Homoeopathic Physician",
       "description": "Dr. Annapoorna (BHMS, MD, SCPH) is a classical homoeopathic specialist with over 10 years of experience treating chronic and acute conditions at Advaita Homoeo Clinic, Kodigehalli, Bengaluru.",
       "telephone": "+916361129208",
       "worksFor": {
-        "@id": "https://drannapoornahomoeo.github.io/advaita/#clinic"
+        "@id": "https://www.advaitahomoeo.in/#clinic"
       },
       "hasCredential": [
         {
@@ -651,6 +651,7 @@ Totally happy with the doctor...</blockquote>
               <div class="phone-actions">
                 <a href="tel:+916361129208" class="phone-btn call-btn">📞 Call Now</a>
                 <a href="https://wa.me/916361129208" target="_blank" class="phone-btn wa-btn">💬 WhatsApp</a>
+                <button type="button" class="phone-btn book-btn" onclick="openBook()" hidden>📅 Book Online</button>
               </div>
             </div>
           </div>
@@ -701,6 +702,94 @@ Totally happy with the doctor...</blockquote>
   <div class="foot-brand">© 2025 <strong>Advaita Homoeo Clinic</strong> · Dr. Annapoorna (BHMS, MD, SCPH) · Kodigehalli, Bengaluru</div>
   <p>Healing naturally, one patient at a time 🌿</p>
 </footer>
+
+<style>
+.book-btn{background:linear-gradient(135deg,#f0b429,#d99a00);color:#0b2d5e;border:0;cursor:pointer;font-family:inherit}
+.book-btn:hover{transform:translateY(-2px)}
+#bkM{position:fixed;inset:0;background:rgba(11,45,94,.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}
+#bkM.on{display:flex}
+.bk{background:#fff;border-radius:18px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:22px;position:relative;font-family:'Nunito',sans-serif;color:#1a2e45}
+.bk h3{font-family:'Playfair Display',serif;color:#0b2d5e;margin:0 0 4px}
+.bk p.s{font-size:.8rem;color:#5b7a99;margin:0 0 14px}
+.bk-x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:1.6rem;cursor:pointer;color:#5b7a99}
+.bk-g{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.bk-o{border:1.5px solid #b8d9f5;background:#f0f7ff;border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit;color:#0b2d5e;text-align:left;flex:1;min-width:130px}
+.bk-o b{display:block}.bk-o small{color:#5b7a99}
+.bk-o.sel,.bk-slot.sel,.bk-d.sel{background:#1a5fa8;border-color:#1a5fa8;color:#fff}.bk-o.sel small{color:#dbeafe}
+.bk-d,.bk-slot{border:1.5px solid #b8d9f5;background:#fff;border-radius:10px;padding:7px 11px;cursor:pointer;font:inherit;font-size:.82rem;color:#0b2d5e}
+.bk-slot:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.bk input,.bk select{width:100%;padding:10px 12px;border:1.5px solid #b8d9f5;border-radius:10px;font:inherit;margin-bottom:10px}
+.bk-go{width:100%;border:0;border-radius:30px;padding:12px;background:linear-gradient(135deg,#2e80d0,#0b2d5e);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin-top:6px}
+.bk-go:disabled{opacity:.5}
+.bk-m{font-size:.82rem;margin-top:10px;color:#b91c1c}
+.bk-sm{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#5b7a99;margin:6px 0}
+</style>
+<div id="bkM" onclick="if(event.target===this)bkClose()"><div class="bk">
+ <button class="bk-x" onclick="bkClose()" aria-label="Close">×</button>
+ <h3>Book an appointment</h3><p class="s">Advaita Homoeo Clinic · Dr. Annapoorna</p>
+ <div id="bk1"><div class="bk-sm">1 · Type of visit</div><div class="bk-g" id="bkT"></div>
+  <div class="bk-sm">2 · Choose a date</div><div class="bk-g" id="bkD"></div>
+  <div class="bk-sm" id="bkSL" style="display:none">3 · Choose a time</div><div class="bk-g" id="bkS"></div>
+  <button class="bk-go" id="bkN" disabled onclick="bkNext()">Continue</button></div>
+ <div id="bk2" style="display:none"><div class="bk-sm" id="bkSum"></div>
+  <input id="bkNm" placeholder="Patient full name" autocomplete="name">
+  <input id="bkAg" type="number" min="0" max="130" placeholder="Age">
+  <select id="bkSx"><option value="">Sex</option><option>Female</option><option>Male</option><option>Other</option></select>
+  <input id="bkPh" type="tel" placeholder="Mobile number (10 digits)" autocomplete="tel">
+  <button class="bk-go" id="bkC" onclick="bkSubmit()">Confirm appointment</button>
+  <button class="bk-o" style="margin-top:8px;width:100%;text-align:center" onclick="bkBack()">← Back</button></div>
+ <div id="bk3" style="display:none"><h3>✅ Appointment booked</h3><p class="s" id="bkDone"></p>
+  <a class="bk-go" id="bkWa" target="_blank" style="display:block;text-align:center;text-decoration:none">Message the clinic on WhatsApp</a></div>
+ <div class="bk-m" id="bkMsg"></div>
+</div></div>
+<script>
+(function(){
+const U='https://gwltbsxdcdscegxqjavf.supabase.co',K='sb_publishable_E46a2svTudfTI9cirNL7Pw_HVcw0ZWk';
+const rpc=(f,b)=>fetch(U+'/rest/v1/rpc/'+f,{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify(b||{})}).then(r=>r.json());
+const $=id=>document.getElementById(id),mn=t=>{const p=t.split(':');return p[0]*60+ +p[1]};
+const fmt=x=>{const h=Math.floor(x/60),m=x%60;return ((h+11)%12+1)+':'+String(m).padStart(2,'0')+(h<12?' AM':' PM')};
+const hhmm=x=>String(Math.floor(x/60)).padStart(2,'0')+':'+String(x%60).padStart(2,'0');
+const ymd=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+let cfg,kind,date,time,busy=[];
+const dur=()=>kind==='New Consultation'?cfg.durN:cfg.durF;
+const hrs=m=>m>=60&&m%60===0?(m/60)+(m===60?' hour':' hours'):m+' min';
+function slots(){
+  if(!kind||!date){return}
+  const d=dur(),st=cfg.step||30,a=mn(cfg.start),e=mn(cfg.end),n=new Date(),td=date===ymd(n),nm=n.getHours()*60+n.getMinutes();let h='';
+  for(let t=a;t+d<=e;t+=st){const ok=!(td&&t<=nm)&&!busy.some(b=>t<mn(b.s)+b.m&&mn(b.s)<t+d);
+    h+=`<button class="bk-slot${t===time?' sel':''}" ${ok?'':'disabled'} data-t="${t}">${fmt(t)}</button>`}
+  $('bkS').innerHTML=h||'No slots available.';$('bkSL').style.display='block';
+  $('bkS').querySelectorAll('.bk-slot').forEach(b=>b.onclick=()=>{time=+b.dataset.t;slots();$('bkN').disabled=false});
+}
+async function pickDate(d){date=d;time=null;$('bkN').disabled=true;$('bkMsg').textContent='';
+  document.querySelectorAll('.bk-d').forEach(b=>b.classList.toggle('sel',b.dataset.d===d));
+  $('bkS').textContent='Loading…';busy=await rpc('booking_busy',{d});if(!Array.isArray(busy))busy=[];slots()}
+window.openBook=async function(){
+  $('bkM').classList.add('on');$('bk1').style.display='block';$('bk2').style.display=$('bk3').style.display='none';
+  $('bkT').innerHTML=['New Consultation','Follow-up'].map(k=>`<button class="bk-o" data-k="${k}"><b>${k}</b><small>about ${hrs(k==='New Consultation'?cfg.durN:cfg.durF)}</small></button>`).join('');
+  $('bkT').querySelectorAll('.bk-o').forEach(b=>b.onclick=()=>{kind=b.dataset.k;time=null;$('bkN').disabled=true;
+    $('bkT').querySelectorAll('.bk-o').forEach(x=>x.classList.toggle('sel',x===b));if(date)pickDate(date)});
+  $('bkD').innerHTML=cfg.days.map(d=>`<button class="bk-d" data-d="${d}">${new Date(d+'T00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</button>`).join('');
+  $('bkD').querySelectorAll('.bk-d').forEach(b=>b.onclick=()=>{if(!kind){$('bkMsg').textContent='Please choose the type of visit first.';return}pickDate(b.dataset.d)});
+};
+window.bkClose=()=>$('bkM').classList.remove('on');
+window.bkNext=()=>{$('bk1').style.display='none';$('bk2').style.display='block';$('bkMsg').textContent='';
+  $('bkSum').textContent=kind+' · '+new Date(date+'T00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+' · '+fmt(time)};
+window.bkBack=()=>{$('bk2').style.display='none';$('bk1').style.display='block'};
+window.bkSubmit=async function(){
+  const nm=$('bkNm').value.trim(),ag=parseInt($('bkAg').value),sx=$('bkSx').value,ph=$('bkPh').value.replace(/\D/g,'').slice(-10);
+  if(nm.length<2||!(ag>=0&&ag<=130)||!sx||ph.length!==10){$('bkMsg').textContent='Please fill name, age, sex and a 10-digit mobile number.';return}
+  $('bkC').disabled=true;$('bkMsg').textContent='';
+  let r;try{r=await rpc('book_appt',{p_name:nm,p_age:ag,p_sex:sx,p_phone:ph,p_kind:kind,p_date:date,p_time:hhmm(time)})}catch(e){r={ok:false,err:'Network problem. Please try again or call the clinic.'}}
+  $('bkC').disabled=false;
+  if(r&&r.ok){$('bk2').style.display='none';$('bk3').style.display='block';
+    const w=kind+' on '+date+' at '+fmt(time);$('bkDone').textContent=w+'. The clinic will contact you if anything changes.';
+    $('bkWa').href='https://wa.me/916361129208?text='+encodeURIComponent('Hello, I booked '+w+' on the website for '+nm+'.');}
+  else{$('bkMsg').textContent=(r&&r.err)||'Could not book. Please call the clinic.';if(r&&r.taken){bkBack();pickDate(date)}}
+};
+rpc('booking_info').then(c=>{if(c&&c.on&&c.days&&c.days.length){cfg=c;document.querySelectorAll('.book-btn').forEach(b=>b.hidden=false)}}).catch(()=>{});
+})();
+</script>
 
 </body>
 </html>
